@@ -1,0 +1,86 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//fck-kalender//DA//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:FCK Kampe
+X-WR-CALDESC:F.C. Københavns kommende kampe\, opdateret ugentligt fra fck.
+ dk
+X-WR-TIMEZONE:Europe/Copenhagen
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:be1050a8c53c7ac61b2f4391962bfa95af1fbca3@fck-kalender
+DTSTAMP:20260908T144858Z
+DTSTART:20261004T133000Z
+DTEND:20261004T153000Z
+SUMMARY:F.C. København vs. Hamburger SV (Træningskamp)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: Hamburger SV\nTurnering: 
+ Træningskamp\nSpillested: Parken - connected by 3\nTV: Ikke i tv\nKampinf
+ o: https://www.fck.dk/kamp/04-10-26/hamburger-sv-fc-kobenhavn
+URL:https://www.fck.dk/kamp/04-10-26/hamburger-sv-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:Træningskamp
+LOCATION:Parken - connected by 3
+END:VEVENT
+BEGIN:VEVENT
+UID:6d71f0c1a57f88e1bf7b994af3afe4d867cadac6@fck-kalender
+DTSTAMP:20260908T144858Z
+DTSTART:20261015T190000Z
+DTEND:20261015T210000Z
+SUMMARY:F.C. København vs. S.C. Braga (UEFA Conference League)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: S.C. Braga\nTurnering: UE
+ FA Conference League\nSpillested: Parken - connected by 3\nTV: TV3 MAX\nHu
+ sk at frigive billet senest 36 timer før kampstart.\nKampinfo: https://ww
+ w.fck.dk/kamp/15-10-26/fc-kobenhavn-sc-braga
+URL:https://www.fck.dk/kamp/15-10-26/fc-kobenhavn-sc-braga
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:UEFA Conference League
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. S.C. Braga
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:5983a82cfcb0f5ebc13f5a22cf4401558d5561cd@fck-kalender
+DTSTAMP:20260908T144858Z
+DTSTART:20261018T160000Z
+DTEND:20261018T180000Z
+SUMMARY:F.C. København vs. AGF (3F Superliga)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: AGF\nTurnering: 3F Superl
+ iga\nSpillested: Parken - connected by 3\nTV: TV3+ / Viaplay\nHusk at frig
+ ive billet senest 36 timer før kampstart.\nKampinfo: https://www.fck.dk/k
+ amp/18-10-26/fc-kobenhavn-agf
+URL:https://www.fck.dk/kamp/18-10-26/fc-kobenhavn-agf
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. AGF
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:13481d35ddef735619288d008a05e33e2f557303@fck-kalender
+DTSTAMP:20260908T144858Z
+DTSTART:20261122T140000Z
+DTEND:20261122T160000Z
+SUMMARY:FC Nordsjælland vs. F.C. København (3F Superliga) [tidspunkt ikke
+  bekræftet]
+DESCRIPTION:Hjemmehold: FC Nordsjælland\nUdehold: F.C. København\nTurneri
+ ng: 3F Superliga\nSpillested: Right to Dream Park\nTV: Ikke oplyst\nOBS: k
+ amptidspunktet er ikke bekræftet. 15:00 er en pladsholder.\nKampinfo: htt
+ ps://www.fck.dk/kamp/22-11-26/fc-nordsjaelland-fc-kobenhavn
+URL:https://www.fck.dk/kamp/22-11-26/fc-nordsjaelland-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Right to Dream Park
+END:VEVENT
+END:VCALENDAR
