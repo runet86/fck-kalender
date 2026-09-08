@@ -1,0 +1,69 @@
+name: Opdater FCK-kalender
+
+on:
+  schedule:
+    # Mandag kl. 06:00 UTC. GitHub koerer cron i UTC.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: fck-kalender
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hent repository
+        uses: actions/checkout@v4
+
+      - name: Opsaet Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer afhaengigheder
+        run: pip install -r requirements.txt
+
+      - name: Koer test af parseren
+        run: python test_parser.py
+
+      - name: Byg kalenderen
+        run: python build_calendar.py
+
+      # Commit holder samtidig repositoriet aktivt. GitHub deaktiverer
+      # planlagte workflows efter 60 dage uden aktivitet i repositoriet.
+      - name: Commit opdateret kalender
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A public
+          if git diff --staged --quiet; then
+            git commit --allow-empty -m "Ingen aendringer i kampprogrammet ($(date -u +%Y-%m-%d))"
+          else
+            git commit -m "Opdateret kampprogram ($(date -u +%Y-%m-%d))"
+          fi
+          git push
+
+      - name: Pak kalenderen til Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Udgiv paa GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
