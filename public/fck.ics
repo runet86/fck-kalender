@@ -1,0 +1,444 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//fck-kalender//DA//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:FCK Kampe
+X-WR-CALDESC:F.C. Københavns kommende kampe\, opdateret ugentligt fra fck.
+ dk
+X-WR-TIMEZONE:Europe/Copenhagen
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:b105922f1ca18576554cac81d5ed5ac8336b37d9@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20260911T170000Z
+DTEND:20260911T190000Z
+SUMMARY:F.C. København vs. AC Horsens (3F Superliga)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: AC Horsens\nTurnering: 3F
+  Superliga\nSpillested: Parken - connected by 3\nTV: TV3 Sport / Viaplay F
+ .C. København\nHusk at frigive billet senest 36 timer før kampstart.\nKa
+ mpinfo: https://www.fck.dk/kamp/11-09-26/fc-kobenhavn-ac-horsens
+URL:https://www.fck.dk/kamp/11-09-26/fc-kobenhavn-ac-horsens
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. AC Horsens
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a4a9e91695dde5260f1ae7675ebeee07a6cc5985@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20260915T160000Z
+DTEND:20260915T180000Z
+SUMMARY:Skovshoved IF vs. F.C. København (Betano Pokalen)
+DESCRIPTION:Hjemmehold: Skovshoved IF\nUdehold: F.C. København\nTurnering:
+  Betano Pokalen\nSpillested: Vanløse Idrætspark\nTV: Viaplay Sport News 
+ / Viaplay Skovshoved IF\nKampinfo: https://www.fck.dk/kamp/15-09-26/skovsh
+ oved-if-fc-kobenhavn
+URL:https://www.fck.dk/kamp/15-09-26/skovshoved-if-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:Betano Pokalen
+LOCATION:Vanløse Idrætspark
+END:VEVENT
+BEGIN:VEVENT
+UID:020e791256e975a897df86c0065da865ae7a4b21@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20260920T120000Z
+DTEND:20260920T140000Z
+SUMMARY:Brøndby IF vs. F.C. København (3F Superliga)
+DESCRIPTION:Hjemmehold: Brøndby IF\nUdehold: F.C. København\nTurnering: 3
+ F Superliga\nSpillested: Brøndby Stadion\nTV: TV3+ / Viaplay Brøndby IF\
+ nKampinfo: https://www.fck.dk/kamp/20-09-26/brondby-if-fc-kobenhavn
+URL:https://www.fck.dk/kamp/20-09-26/brondby-if-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:Brøndby Stadion
+END:VEVENT
+BEGIN:VEVENT
+UID:751a811f66396cbdd7a5814ed3d0f19269e34552@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261004T133000Z
+DTEND:20261004T153000Z
+SUMMARY:Hamburger SV vs. F.C. København (Træningskamp)
+DESCRIPTION:Hjemmehold: Hamburger SV\nUdehold: F.C. København\nTurnering: 
+ Træningskamp\nSpillested: Volksparkstadion\nTV: FCK-app & tv.fck.dk (med 
+ FCK+) Hamburger SV\nKampinfo: https://www.fck.dk/kamp/04-10-26/hamburger-s
+ v-fc-kobenhavn
+URL:https://www.fck.dk/kamp/04-10-26/hamburger-sv-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:Træningskamp
+LOCATION:Volksparkstadion
+END:VEVENT
+BEGIN:VEVENT
+UID:e711e7d49952bf36aec0a1e0d899294ca1764b1f@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261011T160000Z
+DTEND:20261011T180000Z
+SUMMARY:FC Midtjylland vs. F.C. København (3F Superliga)
+DESCRIPTION:Hjemmehold: FC Midtjylland\nUdehold: F.C. København\nTurnering
+ : 3F Superliga\nSpillested: MCH Arena\nTV: TV3+ / Viaplay FC Midtjylland\n
+ Kampinfo: https://www.fck.dk/kamp/11-10-26/fc-midtjylland-fc-kobenhavn
+URL:https://www.fck.dk/kamp/11-10-26/fc-midtjylland-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:MCH Arena
+END:VEVENT
+BEGIN:VEVENT
+UID:6d71f0c1a57f88e1bf7b994af3afe4d867cadac6@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261015T190000Z
+DTEND:20261015T210000Z
+SUMMARY:F.C. København vs. S.C. Braga (UEFA Conference League)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: S.C. Braga\nTurnering: UE
+ FA Conference League\nSpillested: Parken\nTV: Disney+ F.C. København\nHus
+ k at frigive billet senest 36 timer før kampstart.\nKampinfo: https://www
+ .fck.dk/kamp/15-10-26/fc-kobenhavn-sc-braga
+URL:https://www.fck.dk/kamp/15-10-26/fc-kobenhavn-sc-braga
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:UEFA Conference League
+LOCATION:Parken
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. S.C. Braga
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:5983a82cfcb0f5ebc13f5a22cf4401558d5561cd@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261018T160000Z
+DTEND:20261018T180000Z
+SUMMARY:F.C. København vs. AGF (3F Superliga)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: AGF\nTurnering: 3F Superl
+ iga\nSpillested: Parken - connected by 3\nTV: TV3+ / Viaplay F.C. Københa
+ vn\nHusk at frigive billet senest 36 timer før kampstart.\nKampinfo: http
+ s://www.fck.dk/kamp/18-10-26/fc-kobenhavn-agf
+URL:https://www.fck.dk/kamp/18-10-26/fc-kobenhavn-agf
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. AGF
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1dbf6ba89ede7e6b1550389b2e3afd163ab484b9@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261022T164500Z
+DTEND:20261022T184500Z
+SUMMARY:FK Crvena Zvezda vs. F.C. København (UEFA Conference League)
+DESCRIPTION:Hjemmehold: FK Crvena Zvezda\nUdehold: F.C. København\nTurneri
+ ng: UEFA Conference League\nSpillested: Stadium Rajko Mitić\nTV: Disney+ 
+ FK Crvena Zvezda\nKampinfo: https://www.fck.dk/kamp/22-10-26/fk-crvena-zve
+ zda-fc-kobenhavn
+URL:https://www.fck.dk/kamp/22-10-26/fk-crvena-zvezda-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:UEFA Conference League
+LOCATION:Stadium Rajko Mitić
+END:VEVENT
+BEGIN:VEVENT
+UID:63c68c7e6ba22483d3a1b578a7cb23cf4274c50f@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261026T180000Z
+DTEND:20261026T200000Z
+SUMMARY:F.C. København vs. OB (3F Superliga)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: OB\nTurnering: 3F Superli
+ ga\nSpillested: Parken - connected by 3\nTV: TV2 Sport X / TV2 Play F.C. K
+ øbenhavn\nHusk at frigive billet senest 36 timer før kampstart.\nKampinf
+ o: https://www.fck.dk/kamp/26-10-26/fc-kobenhavn-ob
+URL:https://www.fck.dk/kamp/26-10-26/fc-kobenhavn-ob
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. OB
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cbd483c2d6fe2b21e1da5f742948c4967ced07a3@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261102T180000Z
+DTEND:20261102T200000Z
+SUMMARY:Sønderjyske Fodbold vs. F.C. København (3F Superliga)
+DESCRIPTION:Hjemmehold: Sønderjyske Fodbold\nUdehold: F.C. København\nTur
+ nering: 3F Superliga\nSpillested: Sydbank Park\nTV: TV2 Sport X / TV2 Play
+  Sønderjyske Fodbold\nKampinfo: https://www.fck.dk/kamp/02-11-26/sonderjy
+ ske-fodbold-fc-kobenhavn
+URL:https://www.fck.dk/kamp/02-11-26/sonderjyske-fodbold-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:Sydbank Park
+END:VEVENT
+BEGIN:VEVENT
+UID:f343ec6515c41531db0a6aa51108b9ab6f21a481@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261105T200000Z
+DTEND:20261105T220000Z
+SUMMARY:F.C. København vs. FC Iberia 1999 (UEFA Conference League)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: FC Iberia 1999\nTurnering
+ : UEFA Conference League\nSpillested: Parken\nTV: Disney+ F.C. København\
+ nHusk at frigive billet senest 36 timer før kampstart.\nKampinfo: https:/
+ /www.fck.dk/kamp/05-11-26/fc-kobenhavn-fc-iberia-1999
+URL:https://www.fck.dk/kamp/05-11-26/fc-kobenhavn-fc-iberia-1999
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:UEFA Conference League
+LOCATION:Parken
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. FC Iberia 1999
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:f0dc8f7d734456f9c55c2968ce76a752057b08e8@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261108T110000Z
+DTEND:20261108T130000Z
+SUMMARY:F.C. København vs. Brøndby IF (3F Superliga)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: Brøndby IF\nTurnering: 3
+ F Superliga\nSpillested: Parken - connected by 3\nTV: TV2 Sport X / TV2 Pl
+ ay F.C. København\nHusk at frigive billet senest 36 timer før kampstart.
+ \nKampinfo: https://www.fck.dk/kamp/08-11-26/fc-kobenhavn-brondby-if
+URL:https://www.fck.dk/kamp/08-11-26/fc-kobenhavn-brondby-if
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. Brøndby IF
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:13481d35ddef735619288d008a05e33e2f557303@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261122T140000Z
+DTEND:20261122T160000Z
+SUMMARY:FC Nordsjælland vs. F.C. København (3F Superliga) [tidspunkt ikke
+  bekræftet]
+DESCRIPTION:Hjemmehold: FC Nordsjælland\nUdehold: F.C. København\nTurneri
+ ng: 3F Superliga\nSpillested: Right to Dream Park\nTV: Ikke oplyst\nOBS: k
+ amptidspunktet er ikke bekræftet. 15:00 er en pladsholder.\nKampinfo: htt
+ ps://www.fck.dk/kamp/22-11-26/fc-nordsjaelland-fc-kobenhavn
+URL:https://www.fck.dk/kamp/22-11-26/fc-nordsjaelland-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Right to Dream Park
+END:VEVENT
+BEGIN:VEVENT
+UID:5858d8b1941fd5df08381c823a47eded8ce21d3b@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261126T200000Z
+DTEND:20261126T220000Z
+SUMMARY:Inter Club d'Escaldes vs. F.C. København (UEFA Conference League)
+DESCRIPTION:Hjemmehold: Inter Club d'Escaldes\nUdehold: F.C. København\nTu
+ rnering: UEFA Conference League\nSpillested: Estadi de la FAF\nTV: Disney+
+  Inter Club d'Escaldes\nKampinfo: https://www.fck.dk/kamp/26-11-26/inter-c
+ lub-descaldes-fc-kobenhavn
+URL:https://www.fck.dk/kamp/26-11-26/inter-club-descaldes-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:UEFA Conference League
+LOCATION:Estadi de la FAF
+END:VEVENT
+BEGIN:VEVENT
+UID:fc0861150bc16d48052b1e6c5ee0cc9472ba8535@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261129T140000Z
+DTEND:20261129T160000Z
+SUMMARY:F.C. København vs. FC Midtjylland (3F Superliga) [tidspunkt ikke b
+ ekræftet]
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: FC Midtjylland\nTurnering
+ : 3F Superliga\nSpillested: Parken - connected by 3\nTV: Ikke oplyst\nOBS:
+  kamptidspunktet er ikke bekræftet. 15:00 er en pladsholder.\nHusk at fri
+ give billet senest 36 timer før kampstart.\nKampinfo: https://www.fck.dk/
+ kamp/29-11-26/fc-kobenhavn-fc-midtjylland
+URL:https://www.fck.dk/kamp/29-11-26/fc-kobenhavn-fc-midtjylland
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. FC Midtjylland
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:62eca5ed1c54c8d10c0bbced0312c029c4f6d101@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261206T140000Z
+DTEND:20261206T160000Z
+SUMMARY:AC Horsens vs. F.C. København (3F Superliga) [tidspunkt ikke bekr
+ æftet]
+DESCRIPTION:Hjemmehold: AC Horsens\nUdehold: F.C. København\nTurnering: 3F
+  Superliga\nSpillested: CASA Arena Horsens\nTV: Ikke oplyst\nOBS: kamptids
+ punktet er ikke bekræftet. 15:00 er en pladsholder.\nKampinfo: https://ww
+ w.fck.dk/kamp/06-12-26/ac-horsens-fc-kobenhavn
+URL:https://www.fck.dk/kamp/06-12-26/ac-horsens-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:CASA Arena Horsens
+END:VEVENT
+BEGIN:VEVENT
+UID:776576a06d98d38ee834b58d051b6ad8a6cd8343@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261210T174500Z
+DTEND:20261210T194500Z
+SUMMARY:F.C. København vs. FC Lugano (UEFA Conference League)
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: FC Lugano\nTurnering: UEF
+ A Conference League\nSpillested: Parken\nTV: Disney+ F.C. København\nHusk
+  at frigive billet senest 36 timer før kampstart.\nKampinfo: https://www.
+ fck.dk/kamp/10-12-26/fc-kobenhavn-fc-lugano
+URL:https://www.fck.dk/kamp/10-12-26/fc-kobenhavn-fc-lugano
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:UEFA Conference League
+LOCATION:Parken
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. FC Lugano
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:46e565284c0969e564177921b6487d7c76c12cad@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20261217T200000Z
+DTEND:20261217T220000Z
+SUMMARY:Universitatea Craiova vs. F.C. København (UEFA Conference League)
+DESCRIPTION:Hjemmehold: Universitatea Craiova\nUdehold: F.C. København\nTu
+ rnering: UEFA Conference League\nSpillested: Ion Oblemenco Stadium\nTV: Di
+ sney+ Universitatea Craiova\nKampinfo: https://www.fck.dk/kamp/17-12-26/un
+ iversitatea-craiova-fc-kobenhavn
+URL:https://www.fck.dk/kamp/17-12-26/universitatea-craiova-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+CATEGORIES:UEFA Conference League
+LOCATION:Ion Oblemenco Stadium
+END:VEVENT
+BEGIN:VEVENT
+UID:61b39def783f05dbd78406a1d3635a3fd93fe51f@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20270221T140000Z
+DTEND:20270221T160000Z
+SUMMARY:F.C. København vs. Viborg FF (3F Superliga) [tidspunkt ikke bekræ
+ ftet]
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: Viborg FF\nTurnering: 3F 
+ Superliga\nSpillested: Parken - connected by 3\nTV: Ikke oplyst\nOBS: kamp
+ tidspunktet er ikke bekræftet. 15:00 er en pladsholder.\nHusk at frigive 
+ billet senest 36 timer før kampstart.\nKampinfo: https://www.fck.dk/kamp/
+ 21-02-27/fc-kobenhavn-viborg-ff
+URL:https://www.fck.dk/kamp/21-02-27/fc-kobenhavn-viborg-ff
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. Viborg FF
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:4a3481f4fd405b0cdd49e16e7fe90cab0fb4c7b2@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20270228T140000Z
+DTEND:20270228T160000Z
+SUMMARY:AGF vs. F.C. København (3F Superliga) [tidspunkt ikke bekræftet]
+DESCRIPTION:Hjemmehold: AGF\nUdehold: F.C. København\nTurnering: 3F Superl
+ iga\nSpillested: Ceres Park Vejlby\nTV: Ikke oplyst\nOBS: kamptidspunktet 
+ er ikke bekræftet. 15:00 er en pladsholder.\nKampinfo: https://www.fck.dk
+ /kamp/28-02-27/agf-fc-kobenhavn
+URL:https://www.fck.dk/kamp/28-02-27/agf-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Ceres Park Vejlby
+END:VEVENT
+BEGIN:VEVENT
+UID:925f1bcee386e5ffabd40b0fd7d1f0391bf04ed7@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20270307T140000Z
+DTEND:20270307T160000Z
+SUMMARY:F.C. København vs. Randers FC (3F Superliga) [tidspunkt ikke bekr
+ æftet]
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: Randers FC\nTurnering: 3F
+  Superliga\nSpillested: Parken - connected by 3\nTV: Ikke oplyst\nOBS: kam
+ ptidspunktet er ikke bekræftet. 15:00 er en pladsholder.\nHusk at frigive
+  billet senest 36 timer før kampstart.\nKampinfo: https://www.fck.dk/kamp
+ /07-03-27/fc-kobenhavn-randers-fc
+URL:https://www.fck.dk/kamp/07-03-27/fc-kobenhavn-randers-fc
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. Randers FC
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ea7112e7034ba61d5563e1764a5004c36d81e027@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20270314T140000Z
+DTEND:20270314T160000Z
+SUMMARY:F.C. København vs. Silkeborg IF (3F Superliga) [tidspunkt ikke bek
+ ræftet]
+DESCRIPTION:Hjemmehold: F.C. København\nUdehold: Silkeborg IF\nTurnering: 
+ 3F Superliga\nSpillested: Parken - connected by 3\nTV: Ikke oplyst\nOBS: k
+ amptidspunktet er ikke bekræftet. 15:00 er en pladsholder.\nHusk at frigi
+ ve billet senest 36 timer før kampstart.\nKampinfo: https://www.fck.dk/ka
+ mp/14-03-27/fc-kobenhavn-silkeborg-if
+URL:https://www.fck.dk/kamp/14-03-27/fc-kobenhavn-silkeborg-if
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Parken - connected by 3
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Frigiv billet: F.C. København vs. Silkeborg IF
+TRIGGER:-PT36H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:37ef1802e2a09142d201977fa4ef7a91e4b56cfd@fck-kalender
+DTSTAMP:20260908T155850Z
+DTSTART:20270321T140000Z
+DTEND:20270321T160000Z
+SUMMARY:Lyngby Boldklub vs. F.C. København (3F Superliga) [tidspunkt ikke 
+ bekræftet]
+DESCRIPTION:Hjemmehold: Lyngby Boldklub\nUdehold: F.C. København\nTurnerin
+ g: 3F Superliga\nSpillested: Lyngby Stadion\nTV: Ikke oplyst\nOBS: kamptid
+ spunktet er ikke bekræftet. 15:00 er en pladsholder.\nKampinfo: https://w
+ ww.fck.dk/kamp/21-03-27/lyngby-boldklub-fc-kobenhavn
+URL:https://www.fck.dk/kamp/21-03-27/lyngby-boldklub-fc-kobenhavn
+TRANSP:OPAQUE
+STATUS:TENTATIVE
+CATEGORIES:3F Superliga
+LOCATION:Lyngby Stadion
+END:VEVENT
+END:VCALENDAR
