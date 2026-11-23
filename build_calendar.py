@@ -2,10 +2,15 @@
 """
 Bygger en ICS-kalender med F.C. Koebenhavns kommende kampe.
 
-Kilde: https://www.fck.dk/kommende-kampe og de enkelte kampsider paa fck.dk.
+Kilde: https://fck.dk/kampe og de enkelte kampsider paa fck.dk.
 Output: public/fck.ics (plus public/index.html).
 
 Koeres ugentligt af GitHub Actions. Se README.md.
+
+Version 2 (23.11.2026): tilpasset fck.dk's omlagte site. Oversigten ligger nu
+paa /kampe, links er uden www, og kampsiden har hverken geo.placename eller
+tidspunkt i og:title. Turnering og spillested laeses nu af og:description,
+kamptidspunktet af overskriften, og tv-kanalen af det etiketterede TV-felt.
 """
 
 from __future__ import annotations
@@ -18,6 +23,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 
 import requests
@@ -27,8 +33,9 @@ from bs4 import BeautifulSoup
 # KONFIGURATION
 # ---------------------------------------------------------------------------
 
-BASE_URL = "https://www.fck.dk"
-LIST_URL = f"{BASE_URL}/kommende-kampe"
+BASE_URL = "https://fck.dk"
+LIST_URL = f"{BASE_URL}/kampe"
+ALLOWED_HOSTS = {"fck.dk", "www.fck.dk"}
 
 CALENDAR_NAME = "FCK Kampe"
 CALENDAR_DESC = "F.C. Københavns kommende kampe, opdateret ugentligt fra fck.dk"
@@ -38,9 +45,9 @@ LOCAL_TZ = ZoneInfo("Europe/Copenhagen")
 # Kampens varighed i kalenderen.
 MATCH_DURATION = timedelta(hours=2)
 
-# Kampe uden bekraeftet kamptidspunkt vises paa fck.dk som kl. 00:00.
-# De laegges i stedet paa denne pladsholdertid og markeres som ikke bekraeftet.
-TBC_SOURCE_TIME = (0, 0)
+# Kampe uden fastlagt kampstart vises paa fck.dk som "Tidspunkt følger", og
+# overskriften paa kampsiden mangler da "kl. HH.MM". De laegges paa denne
+# pladsholdertid og markeres som ikke bekraeftet.
 TBC_PLACEHOLDER_TIME = (15, 0)
 
 # Paamindelse om at frigive billet: 36 timer (1,5 doegn) foer kampstart.
@@ -55,17 +62,19 @@ NO_TICKET_ALARM_KEYWORDS = ("traeningskamp", "træningskamp", "venskabskamp")
 SEPARATE_TICKET_EVENTS = False
 
 # Navnevarianter for FCK, brugt til at afgoere hjemme- eller udebane.
-FCK_NAMES = {"f.c. kobenhavn", "f.c. kobenhavn", "fc kobenhavn", "f.c. koebenhavn", "fck"}
+FCK_NAMES = {"f.c. kobenhavn", "fc kobenhavn", "f.c. koebenhavn", "fck"}
 
-USER_AGENT = "fck-kalender/1.0 (personal calendar feed; +https://github.com)"
+USER_AGENT = "fck-kalender/2.0 (personal calendar feed)"
 REQUEST_PAUSE_SECONDS = 1.0
 REQUEST_TIMEOUT = 30
 
 OUTPUT_DIR = Path("public")
 ICS_PATH = OUTPUT_DIR / "fck.ics"
 
-MATCH_HREF_RE = re.compile(r"^/kamp/\d{2}-\d{2}-\d{2}/[a-z0-9\-]+$")
-DATETIME_RE = re.compile(r"(\d{2})/(\d{2})\s+(\d{4})\s+(\d{1,2}):(\d{2})")
+MATCH_PATH_RE = re.compile(r"^/kamp/\d{2}-\d{2}-\d{2}/[a-z0-9\-]+$")
+ISO_DATE_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})\s*$")
+KICKOFF_RE = re.compile(r"kl\.\s*(\d{1,2})[.:](\d{2})")
+SEASON_RE = re.compile(r"^s[æa]son\s*\d{2}/\d{2}$", re.IGNORECASE)
 
 
 # ---------------------------------------------------------------------------
@@ -87,7 +96,7 @@ class Match:
 
     @property
     def is_home(self) -> bool:
-        return normalise_team(self.home) in FCK_NAMES
+        return normalise(self.home) in FCK_NAMES
 
     @property
     def gets_ticket_alarm(self) -> bool:
@@ -102,8 +111,8 @@ class Match:
 # ---------------------------------------------------------------------------
 
 
-def normalise_team(name: str) -> str:
-    """Fjerner diakritiske tegn og mellemrum saa holdnavne kan sammenlignes."""
+def normalise(name: str) -> str:
+    """Fjerner diakritiske tegn og dobbelte mellemrum, saa navne kan sammenlignes."""
     lowered = name.strip().lower()
     for src, dst in (("ø", "o"), ("æ", "a"), ("å", "a"), ("ö", "o"), ("ä", "a")):
         lowered = lowered.replace(src, dst)
@@ -129,25 +138,38 @@ def meta_content(soup: BeautifulSoup, *, name: str = "", prop: str = "") -> str:
     return ""
 
 
+def page_lines(soup: BeautifulSoup) -> list[str]:
+    return [ln.strip() for ln in soup.get_text("\n").split("\n") if ln.strip()]
+
+
 # ---------------------------------------------------------------------------
 # INDSAMLING AF KAMPLINKS
 # ---------------------------------------------------------------------------
 
 
 def collect_match_urls(soup: BeautifulSoup) -> list[str]:
-    """Finder alle kamplinks paa oversigtssiden, i dokumentraekkefoelge, uden dubletter."""
+    """
+    Finder alle kamplinks paa oversigtssiden, i dokumentraekkefoelge, uden dubletter.
+    Baade relative links og absolutte links med og uden www accepteres.
+    """
     urls: list[str] = []
     seen: set[str] = set()
+
     for anchor in soup.find_all("a", href=True):
-        href = anchor["href"].split("?")[0].rstrip("/")
-        if href.startswith(BASE_URL):
-            href = href[len(BASE_URL) :]
-        if not MATCH_HREF_RE.match(href):
+        parsed = urlparse(anchor["href"])
+        if parsed.scheme and parsed.scheme not in ("http", "https"):
             continue
-        if href in seen:
+        if parsed.netloc and parsed.netloc.lower() not in ALLOWED_HOSTS:
             continue
-        seen.add(href)
-        urls.append(BASE_URL + href)
+
+        path = parsed.path.rstrip("/")
+        if not MATCH_PATH_RE.match(path):
+            continue
+        if path in seen:
+            continue
+        seen.add(path)
+        urls.append(BASE_URL + path)
+
     return urls
 
 
@@ -156,113 +178,130 @@ def collect_match_urls(soup: BeautifulSoup) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
-def parse_title(raw_title: str) -> tuple[str, str, str, datetime] | None:
+def parse_teams_and_date(raw_title: str) -> tuple[str, str, datetime] | None:
     """
-    Forventet format paa kampsidens og:title:
-        "F.C. Koebenhavn vs. AGF 2026-10-18  | 18/10 2026 18:00 | 3F Superliga"
-    Returnerer (hjemmehold, udehold, turnering, naiv lokal kampstart).
+    og:title har formen "F.C. København vs. FC Midtjylland 2026-11-29".
+    Returnerer (hjemmehold, udehold, dato uden klokkeslaet).
     """
-    parts = [p.strip() for p in raw_title.split("|") if p.strip()]
-    if len(parts) < 3:
+    title = raw_title.strip()
+
+    date_match = ISO_DATE_RE.search(title)
+    if not date_match:
         return None
+    year, month, day = (int(g) for g in date_match.groups())
 
-    # Sidste led kan vaere sitenavnet, hvis vi faldt tilbage paa <title>.
-    if normalise_team(parts[-1]) in FCK_NAMES and len(parts) >= 4:
-        parts = parts[:-1]
-
-    teams_part, datetime_part, competition = parts[0], parts[1], parts[2]
-
-    match = DATETIME_RE.search(datetime_part)
-    if not match:
-        return None
-    day, month, year, hour, minute = (int(g) for g in match.groups())
-
-    teams_part = re.sub(r"\s*\d{4}-\d{2}-\d{2}\s*$", "", teams_part).strip()
-    if " vs. " in teams_part:
-        home, away = teams_part.split(" vs. ", 1)
-    elif " vs " in teams_part:
-        home, away = teams_part.split(" vs ", 1)
-    else:
-        return None
-
-    start = datetime(year, month, day, hour, minute)
-    return home.strip(), away.strip(), competition.strip(), start
+    teams_part = title[: date_match.start()].strip()
+    for separator in (" vs. ", " vs ", " mod "):
+        if separator in teams_part:
+            home, away = teams_part.split(separator, 1)
+            return home.strip(), away.strip(), datetime(year, month, day)
+    return None
 
 
-def extract_tv(soup: BeautifulSoup, venue: str) -> str:
+def parse_description(raw_description: str) -> tuple[str, str]:
     """
-    Paa kampsiden staar spillested og tv-kanal paa samme linje adskilt af en lodret streg,
-    for eksempel "Parken - connected by 3 | TV3+ / Viaplay".
-    Elementgraensen kan ligge forskellige steder, saa begge layouts haandteres.
+    og:description har formen "3F Superliga · Sæson 26/27 · Parken - connected by 3".
+    Returnerer (turnering, spillested). Spillestedet er tomt, hvis sidste led
+    blot er saesonen.
     """
-    if not venue:
-        return ""
+    parts = [p.strip() for p in raw_description.split("·") if p.strip()]
+    if not parts:
+        return "", ""
 
-    lines = [ln.strip() for ln in soup.get_text("\n").split("\n") if ln.strip()]
-    venue_norm = normalise_team(venue)
+    competition = parts[0]
+    venue = ""
+    if len(parts) >= 2 and not SEASON_RE.match(parts[-1]):
+        venue = parts[-1]
+    return competition, venue
 
+
+def parse_kickoff(soup: BeautifulSoup) -> tuple[int, int] | None:
+    """
+    Overskriften har formen "F.C. København mod FC Midtjylland, 29.11.2026 kl. 16.00".
+    Mangler "kl. HH.MM", er kamptidspunktet ikke fastlagt endnu.
+    """
+    heading = soup.find("h1")
+    if not heading:
+        return None
+    found = KICKOFF_RE.search(heading.get_text(" ", strip=True))
+    if not found:
+        return None
+    hour, minute = int(found.group(1)), int(found.group(2))
+    if 0 <= hour <= 23 and 0 <= minute <= 59:
+        return hour, minute
+    return None
+
+
+def extract_venue_and_tv(lines: list[str]) -> tuple[str, str]:
+    """
+    Kampsiden har etiketterede felter: linjen "Stadion" efterfulgt af spillestedet,
+    og kort efter linjen "TV" efterfulgt af kanalen. Soegningen efter "TV" starter
+    forst efter "Stadion", saa menupunktet TV oeverst paa siden ikke rammes.
+    """
     for index, line in enumerate(lines):
-        line_norm = normalise_team(line)
-        if not line_norm.startswith(venue_norm):
+        if line != "Stadion" or index + 1 >= len(lines):
             continue
 
-        # Layout A: hele linjen i eet element.
-        if "|" in line:
-            candidate = line.split("|", 1)[1].strip()
-            if is_plausible_tv(candidate):
-                return candidate
+        venue = lines[index + 1]
+        tv = ""
+        for offset in range(index + 2, min(index + 12, len(lines) - 1)):
+            if lines[offset] == "TV":
+                candidate = lines[offset + 1]
+                if is_plausible_tv(candidate):
+                    tv = candidate
+                break
+        return venue, tv
 
-        # Layout B: spillested, streg og kanal i separate elementer.
-        window = " ".join(lines[index + 1 : index + 4])
-        if "|" in window:
-            candidate = window.split("|", 1)[1].strip()
-            candidate = candidate.split("  ")[0].strip()
-            if is_plausible_tv(candidate):
-                return candidate
-
-    return ""
+    return "", ""
 
 
 def is_plausible_tv(candidate: str) -> bool:
     if not candidate or len(candidate) > 60:
         return False
-    if "\n" in candidate:
-        return False
-    # Udelukker navigationstekst der er sluppet med.
     lowered = candidate.lower()
-    return not any(word in lowered for word in ("koeb billet", "køb billet", "go to match", "menu"))
+    if lowered.startswith(("http", "/", "www.")):
+        return False
+    return not any(word in lowered for word in ("fanshop", "billetter", "business", "log ind"))
 
 
 def parse_match_page(url: str, session: requests.Session) -> Match | None:
     soup = fetch(url, session)
 
     raw_title = meta_content(soup, prop="og:title") or (soup.title.get_text() if soup.title else "")
-    parsed = parse_title(raw_title)
+    parsed = parse_teams_and_date(raw_title)
     if not parsed:
-        print(f"ADVARSEL: kunne ikke laese titel paa {url}", file=sys.stderr)
+        print(f"ADVARSEL: kunne ikke laese hold og dato paa {url}", file=sys.stderr)
         return None
+    home, away, match_date = parsed
 
-    home, away, competition, start = parsed
+    raw_description = meta_content(soup, prop="og:description") or meta_content(
+        soup, name="description"
+    )
+    competition, venue_from_meta = parse_description(raw_description)
+
     warnings: list[str] = []
+    if not competition:
+        warnings.append("turnering ikke fundet")
 
-    time_confirmed = (start.hour, start.minute) != TBC_SOURCE_TIME
-    if not time_confirmed:
-        start = start.replace(hour=TBC_PLACEHOLDER_TIME[0], minute=TBC_PLACEHOLDER_TIME[1])
-
-    venue = meta_content(soup, name="geo.placename")
+    venue, tv = extract_venue_and_tv(page_lines(soup))
+    if not venue:
+        venue = venue_from_meta
     if not venue:
         warnings.append("spillested ikke fundet")
-
-    tv = extract_tv(soup, venue)
     if not tv:
-        warnings.append("tv-kanal ikke fundet")
+        warnings.append("tv-kanal ikke oplyst")
+
+    kickoff = parse_kickoff(soup)
+    time_confirmed = kickoff is not None
+    hour, minute = kickoff if kickoff else TBC_PLACEHOLDER_TIME
+    start = match_date.replace(hour=hour, minute=minute, tzinfo=LOCAL_TZ)
 
     return Match(
         url=url,
         home=home,
         away=away,
         competition=competition,
-        start_local=start.replace(tzinfo=LOCAL_TZ),
+        start_local=start,
         venue=venue,
         tv=tv,
         time_confirmed=time_confirmed,
@@ -286,19 +325,16 @@ def escape(text: str) -> str:
 
 def fold(line: str) -> str:
     """Folder en ICS-linje til hoejst 75 oktetter, jf. RFC 5545."""
-    encoded = line.encode("utf-8")
-    if len(encoded) <= 75:
+    if len(line.encode("utf-8")) <= 75:
         return line
 
     chunks: list[bytes] = []
     current = b""
-    limit = 75
     for char in line:
         char_bytes = char.encode("utf-8")
-        if len(current) + len(char_bytes) > limit:
+        if len(current) + len(char_bytes) > 75:
             chunks.append(current)
             current = b" " + char_bytes
-            limit = 75
         else:
             current += char_bytes
     chunks.append(current)
@@ -311,14 +347,14 @@ def to_utc_stamp(moment: datetime) -> str:
 
 def assign_uids(matches: list[Match]) -> dict[int, str]:
     """
-    UID bindes til turnering, hold og hvilket moede i raekken det er, ikke til datoen.
-    Naar en kamp flyttes, opdateres den samme begivenhed i stedet for at blive
-    slettet og oprettet paa ny.
+    UID bindes til turnering, hold og hvilket moede i raekken det er, ikke til
+    datoen. Naar en kamp flyttes, opdateres den samme begivenhed i stedet for at
+    blive slettet og oprettet paa ny.
     """
     counters: dict[tuple[str, str, str], int] = defaultdict(int)
     uids: dict[int, str] = {}
-    for index, match in enumerate(sorted(matches, key=lambda m: m.start_local)):
-        key = (match.competition, normalise_team(match.home), normalise_team(match.away))
+    for match in sorted(matches, key=lambda m: m.start_local):
+        key = (match.competition, normalise(match.home), normalise(match.away))
         counters[key] += 1
         raw = f"{key[0]}|{key[1]}|{key[2]}|{counters[key]}"
         uids[id(match)] = hashlib.sha1(raw.encode("utf-8")).hexdigest() + "@fck-kalender"
@@ -329,7 +365,7 @@ def build_description(match: Match) -> str:
     lines = [
         f"Hjemmehold: {match.home}",
         f"Udehold: {match.away}",
-        f"Turnering: {match.competition}",
+        f"Turnering: {match.competition or 'Ikke oplyst'}",
         f"Spillested: {match.venue or 'Ikke oplyst'}",
         f"TV: {match.tv or 'Ikke oplyst'}",
     ]
@@ -345,7 +381,9 @@ def build_description(match: Match) -> str:
 
 
 def build_summary(match: Match) -> str:
-    summary = f"{match.home} vs. {match.away} ({match.competition})"
+    summary = f"{match.home} vs. {match.away}"
+    if match.competition:
+        summary += f" ({match.competition})"
     if not match.time_confirmed:
         summary += " [tidspunkt ikke bekræftet]"
     return summary
@@ -364,8 +402,9 @@ def event_lines(match: Match, uid: str, stamp: str) -> list[str]:
         f"URL:{match.url}",
         "TRANSP:OPAQUE",
         f"STATUS:{'CONFIRMED' if match.time_confirmed else 'TENTATIVE'}",
-        f"CATEGORIES:{escape(match.competition)}",
     ]
+    if match.competition:
+        lines.append(f"CATEGORIES:{escape(match.competition)}")
     if match.venue:
         lines.append(f"LOCATION:{escape(match.venue)}")
 
@@ -455,7 +494,10 @@ def main() -> int:
     print(f"Fandt {len(match_urls)} kamplinks.")
 
     if not match_urls:
-        print("FEJL: ingen kamplinks fundet. Sidens struktur er sandsynligvis aendret.", file=sys.stderr)
+        print(
+            "FEJL: ingen kamplinks fundet. Sidens struktur er sandsynligvis aendret.",
+            file=sys.stderr,
+        )
         return 1
 
     matches: list[Match] = []
@@ -475,7 +517,7 @@ def main() -> int:
         note = f" [{', '.join(match.warnings)}]" if match.warnings else ""
         print(
             f"  {flag} {match.start_local:%d/%m %H:%M} {match.home} vs. {match.away}"
-            f" | {match.competition} | {match.venue or '?'} | {match.tv or '?'}{note}"
+            f" | {match.competition or '?'} | {match.venue or '?'} | {match.tv or '?'}{note}"
         )
         time.sleep(REQUEST_PAUSE_SECONDS)
 
